@@ -13,7 +13,7 @@ export default function Home() {
         Ketones, and Blood readings instantly, matched against a standard
         reference chart using image-based color analysis.
       </p>
-      <Link to="/analyze" className="cta-btn">
+      <Link to="/analyze" className="cta-btn" title="Start analyzing your urine test strip photo">
         {user ? 'Analyze a strip →' : 'Try it now →'}
       </Link>
 
