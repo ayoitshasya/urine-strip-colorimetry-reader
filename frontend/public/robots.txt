@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+Disallow: /history/
+
+Sitemap: https://urine-strip-colorimetry-reader.vercel.app/sitemap.xml
