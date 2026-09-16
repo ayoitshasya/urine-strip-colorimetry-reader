@@ -1,13 +1,32 @@
+<!--
+  index.html
+
+  What this file does:
+    The single static HTML page that hosts the entire React single-page
+    application. Vite injects/serves the built JS from here in production;
+    in dev it loads main.jsx directly as an ES module.
+
+  Where it fits in the project:
+    This is the frontend's true entry point in the browser — it defines
+    the page <title>/meta tags (important for SEO, since this is a
+    client-rendered app with otherwise little server-side HTML), loads
+    the Google Fonts used across the UI, wires up Google Analytics, and
+    mounts src/main.jsx into <div id="root">.
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Urine Test Strip Reader Online | StripReader – Instant Urinalysis Color Matching</title>
+    <!-- Preconnect hints let the browser open the connection to Google
+         Fonts' servers early, in parallel with parsing the rest of the
+         page, so the actual font request (below) completes faster. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+
+    <!-- SEO: shown as the result snippet in search engines. -->
     <meta name="description" content="Upload a photo of your reacted urine test strip and get instant Glucose, Protein, pH, Ketones, 
       and Blood readings matched against a lab-standard color chart.">
     
@@ -18,6 +37,9 @@
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MC9T87RRGY"></script>
 <script>
+  // Standard Google Analytics (gtag.js) bootstrap snippet: queues calls
+  // into window.dataLayer until the async script above finishes loading
+  // and can start actually processing them.
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -26,7 +48,11 @@
 </script>
   </head>
   <body>
+    <!-- React mounts the entire app inside this single empty div. -->
     <div id="root"></div>
+    <!-- type="module" lets the browser load this as a native ES module
+         (with import/export) directly during development; Vite rewrites
+         this to point at the bundled/hashed output for production builds. -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

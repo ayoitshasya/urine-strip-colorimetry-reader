@@ -1,3 +1,13 @@
+// -----------------------------------------------------------------------
+// Contact.jsx
+//
+// What this file does:
+//   Static contact/attribution page with project and institution details.
+//
+// Where it fits in the project:
+//   Routed at /contact in App.jsx. No dynamic data or API calls.
+// -----------------------------------------------------------------------
+
 export default function Contact() {
   return (
     <div className="page">

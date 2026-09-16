@@ -1,3 +1,20 @@
+// -----------------------------------------------------------------------
+// Login.jsx
+//
+// What this file does:
+//   The sign-in page: email/password form plus a "Sign in with Google"
+//   button, either of which logs the user in and redirects them onward.
+//
+// Where it fits in the project:
+//   Routed at /login in App.jsx. ProtectedRoute redirects unauthenticated
+//   visitors here (attaching where they came from via router state), so
+//   this page sends them back to that original destination after success.
+//
+// Closely related files:
+//   - api/api.js: login()/googleAuth() perform the backend auth calls.
+//   - context/AuthContext.jsx: login() here stores the resulting session.
+// -----------------------------------------------------------------------
+
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
@@ -12,6 +29,9 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  // If ProtectedRoute redirected here, `location.state.from` holds the
+  // page the user was originally trying to reach; otherwise default to
+  // the main Analyze page as the most useful post-login destination.
   const redirectTo = location.state?.from || '/analyze'
 
   const handleSubmit = async (e) => {
@@ -32,6 +52,8 @@ export default function Login() {
   const handleGoogleSuccess = async (credentialResponse) => {
     setError(null)
     try {
+      // `credentialResponse.credential` is the Google-issued ID token;
+      // the backend verifies it server-side before trusting it.
       const data = await googleAuth(credentialResponse.credential)
       login(data.access_token, data.user)
       navigate(redirectTo)

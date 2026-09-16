@@ -1,3 +1,22 @@
+// -----------------------------------------------------------------------
+// App.jsx
+//
+// What this file does:
+//   Defines the app's page layout shell and client-side route map — which
+//   page component renders for each URL path.
+//
+// Where it fits in the project:
+//   Rendered by main.jsx inside the routing/auth providers. This is the
+//   top of the visible component tree: it always shows the Navbar and
+//   footer, and swaps out the middle content based on the current route.
+//
+// Closely related files:
+//   - components/Navbar.jsx: persistent top navigation shown on every page.
+//   - components/ProtectedRoute.jsx: gate used below to keep /history
+//     login-only.
+//   - pages/*.jsx: the individual screens routed to below.
+// -----------------------------------------------------------------------
+
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -24,6 +43,10 @@ export default function App() {
         <Route
           path="/history"
           element={
+            // History is only meaningful for a logged-in user (guest scans
+            // are never saved server-side), so it's wrapped in
+            // ProtectedRoute to redirect anonymous visitors instead of
+            // showing an empty/erroring page.
             <ProtectedRoute>
               <History />
             </ProtectedRoute>

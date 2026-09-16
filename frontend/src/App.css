@@ -1,3 +1,18 @@
+/* -----------------------------------------------------------------------
+   App.css
+
+   What this file does:
+     All component/page-level styling for the app — layout shell, the
+     recurring "strip motif" loading/decorative element, navbar, buttons,
+     and the styles for each page (Home, Analyze results, auth forms,
+     History). Organized into labeled sections, one per UI area.
+
+   Where it fits in the project:
+     Imported by App.jsx, so it applies to the whole routed page tree.
+     Relies on the color/font/spacing custom properties (--teal, --ink,
+     etc.) defined globally in index.css.
+   ----------------------------------------------------------------------- */
+
 /* ============ Layout shell ============ */
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 
@@ -43,6 +58,9 @@
 .strip-motif.animated span {
   animation: pad-pulse 1.6s ease-in-out infinite;
 }
+/* Each pad pulses with its own color and a staggered delay, so the
+   animation reads as a wave rippling left-to-right across the strip
+   rather than all 5 segments blinking in unison. */
 .strip-motif.animated span:nth-child(1) { background: #0D7C66; animation-delay: 0s; }
 .strip-motif.animated span:nth-child(2) { background: #3E9C6B; animation-delay: 0.15s; }
 .strip-motif.animated span:nth-child(3) { background: #C7A93A; animation-delay: 0.3s; }
@@ -427,6 +445,9 @@
   background: var(--surface);
 }
 
+/* Small-screen adjustments: tighten navbar spacing and hide the username
+   text (the avatar circle alone is enough identity on narrow phones) so
+   the navbar doesn't wrap awkwardly or overflow. */
 @media (max-width: 640px) {
   .navbar { padding: 0.8rem 1rem; flex-wrap: wrap; gap: 0.6rem; }
   .nav-links { gap: 1rem; font-size: 0.88rem; }

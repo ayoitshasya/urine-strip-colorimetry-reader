@@ -1,3 +1,15 @@
+// -----------------------------------------------------------------------
+// About.jsx
+//
+// What this file does:
+//   Static informational page explaining what colorimetry is and how
+//   this app's analysis works, in plain language for end users.
+//
+// Where it fits in the project:
+//   Routed at /about in App.jsx. No dynamic data or API calls — purely
+//   presentational content.
+// -----------------------------------------------------------------------
+
 export default function About() {
   return (
     <div className="page">

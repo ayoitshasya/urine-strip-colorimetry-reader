@@ -1,3 +1,21 @@
+/* -----------------------------------------------------------------------
+   index.css
+
+   What this file does:
+     Global, app-wide base styles: a CSS reset, the color/typography/
+     spacing design tokens (CSS custom properties) used throughout the
+     app, and a few universal element defaults (focus outlines, selection
+     color, reduced-motion support).
+
+   Where it fits in the project:
+     Imported once in main.jsx, before any component renders, so these
+     tokens and resets are available to every other stylesheet
+     (App.css and any component-level styles).
+   ----------------------------------------------------------------------- */
+
+/* Reset: remove default margins/padding and use border-box sizing
+   everywhere, so width/height calculations aren't surprised by borders
+   and padding being added on top of a set size. */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -39,11 +57,17 @@ button, input { font-family: inherit; }
 
 ::selection { background: var(--amber-soft); color: var(--ink); }
 
+/* Only show a focus ring for keyboard/assistive-tech navigation
+   (:focus-visible), not on every mouse click, so the UI stays clean for
+   mouse users while remaining accessible for keyboard users. */
 :focus-visible {
   outline: 2px solid var(--teal);
   outline-offset: 2px;
 }
 
+/* Respect the OS-level "reduce motion" accessibility setting by
+   collapsing all animations/transitions to effectively instant, for
+   users who find motion distracting or disorienting. */
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }

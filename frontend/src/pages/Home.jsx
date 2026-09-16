@@ -1,3 +1,19 @@
+// -----------------------------------------------------------------------
+// Home.jsx
+//
+// What this file does:
+//   The landing page: hero section with a call-to-action into the
+//   Analyze flow, a small animated visual of the strip pads, and a
+//   feature summary row.
+//
+// Where it fits in the project:
+//   Routed at / in App.jsx — the first page most visitors see.
+//
+// Closely related files:
+//   - context/AuthContext.jsx: used to tailor the CTA text based on
+//     whether the visitor is already logged in.
+// -----------------------------------------------------------------------
+
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -14,6 +30,9 @@ export default function Home() {
         reference chart using image-based color analysis.
       </p>
       <Link to="/analyze" className="cta-btn" title="Start analyzing your urine test strip photo">
+        {/* Slightly different copy for returning vs. new visitors — "Try it
+            now" invites a first-time visitor to experiment, while a logged-in
+            user already knows what the tool does. */}
         {user ? 'Analyze a strip →' : 'Try it now →'}
       </Link>
 

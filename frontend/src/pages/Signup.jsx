@@ -1,3 +1,19 @@
+// -----------------------------------------------------------------------
+// Signup.jsx
+//
+// What this file does:
+//   The account-creation page: name/email/password form plus a "Sign up
+//   with Google" button, either of which creates an account and logs the
+//   user in.
+//
+// Where it fits in the project:
+//   Routed at /signup in App.jsx.
+//
+// Closely related files:
+//   - api/api.js: signup()/googleAuth() perform the backend calls.
+//   - context/AuthContext.jsx: login() here stores the resulting session.
+// -----------------------------------------------------------------------
+
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google'
@@ -17,6 +33,10 @@ export default function Signup() {
     e.preventDefault()
     setError(null)
 
+    // Mirrors the backend's implicit minimum (bcrypt hashing has no
+    // strength requirement itself, but this keeps accounts from being
+    // created with trivially weak passwords) — checked client-side first
+    // to give instant feedback before making a network request.
     if (password.length < 8) {
       setError('Password must be at least 8 characters')
       return
@@ -37,6 +57,9 @@ export default function Signup() {
   const handleGoogleSuccess = async (credentialResponse) => {
     setError(null)
     try {
+      // Google sign-in doubles as signup here: the backend creates an
+      // account automatically the first time a given Google email is seen
+      // (see backend/app/main.py's /auth/google route).
       const data = await googleAuth(credentialResponse.credential)
       login(data.access_token, data.user)
       navigate('/analyze')

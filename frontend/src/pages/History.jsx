@@ -1,9 +1,29 @@
+// -----------------------------------------------------------------------
+// History.jsx
+//
+// What this file does:
+//   Lists a logged-in user's previously saved strip scans, with actions
+//   to download each one as a PDF or delete it.
+//
+// Where it fits in the project:
+//   Routed at /history in App.jsx, wrapped in ProtectedRoute so only
+//   logged-in users can reach it (guest scans are never saved, so there
+//   would be nothing to show anyway).
+//
+// Closely related files:
+//   - api/api.js: fetchHistory()/deleteHistoryItem() perform the backend calls.
+//   - utils/pdfExport.js: builds the PDF for the "Download PDF" action.
+// -----------------------------------------------------------------------
+
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchHistory, deleteHistoryItem } from '../api/api'
 import { exportResultsToPDF } from '../utils/pdfExport'
 
 export default function History() {
+  // `null` specifically means "not loaded yet" (shows a loading spinner),
+  // distinct from an empty array which means "loaded, but no scans yet"
+  // (shows the empty state) — see the render logic below.
   const [items, setItems] = useState(null)
   const [error, setError] = useState(null)
 
@@ -24,6 +44,8 @@ export default function History() {
   const handleDelete = async (id) => {
     try {
       await deleteHistoryItem(id)
+      // Update local state directly instead of re-fetching the whole list
+      // from the server, so the deleted card disappears immediately.
       setItems((prev) => prev.filter((i) => i.id !== id))
     } catch (err) {
       setError(err.response?.data?.detail || 'Could not delete entry')
