@@ -66,6 +66,20 @@ export async function analyzeStripImage(file) {
   return response.data
 }
 
+// ---- Report (NLP layer) ----
+
+/**
+ * Turn the results from analyzeStripImage() into a plain-language report in
+ * English and Hindi (English report -> LSTM seq2seq translation -> consistency check).
+ *
+ * @param {object} results - The `results` object from the /analyze response.
+ * @returns {Promise<object>} { english, hindi, all_consistent, lines }
+ */
+export async function fetchReport(results) {
+  const response = await client.post('/report', { results })
+  return response.data
+}
+
 // ---- Auth ----
 
 /** Register a new local account. Returns the TokenResponse JSON (access token + user info). */
