@@ -30,6 +30,7 @@ from google.oauth2 import id_token as google_id_token
 from sqlmodel import Session, select
 
 from .colorimetry import analyze_strip
+from .nlp.service import build_bilingual_report
 from .database import init_db, get_session
 from .models import User, ScanHistory
 from .auth import (
@@ -47,6 +48,8 @@ from .schemas import (
     UserOut,
     HistoryItem,
     AnalysisResponse,
+    ReportRequest,
+    ReportResponse,
 )
 
 # Empty string disables Google sign-in gracefully (see /auth/google below)
@@ -267,6 +270,23 @@ async def analyze(
         saved = True
 
     return AnalysisResponse(filename=file.filename, results=results, saved_to_history=saved)
+
+
+# ---------------------------------------------------------------------
+# Report (NLP layer: English report + English->Hindi seq2seq translation)
+# ---------------------------------------------------------------------
+
+@app.post("/report", response_model=ReportResponse)
+def report(payload: ReportRequest):
+    """Turn analysis results into a plain-language report in English and Hindi.
+
+    Takes the `results` object returned by POST /analyze. No auth and no DB
+    access: it is a pure function of the results, so guests can use it too.
+    Any Hindi sentence that fails the clinical consistency check is returned
+    in English instead (see nlp/service.py).
+    """
+    results = {name: r.model_dump() for name, r in payload.results.items()}
+    return build_bilingual_report(results)
 
 
 # ---------------------------------------------------------------------

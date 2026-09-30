@@ -20,6 +20,7 @@
 import { useState } from 'react'
 import UploadForm from '../components/UploadForm'
 import ResultsDisplay from '../components/ResultsDisplay'
+import ReportPanel from '../components/ReportPanel'
 import { analyzeStripImage } from '../api/api'
 import { useAuth } from '../context/AuthContext'
 
@@ -69,6 +70,8 @@ export default function Analyze() {
       {error && <p className="error">{error}</p>}
 
       <ResultsDisplay results={results} filename={filename} savedToHistory={savedToHistory} />
+
+      <ReportPanel results={results} />
     </div>
   )
 }

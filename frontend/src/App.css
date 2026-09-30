@@ -455,3 +455,23 @@
   .nav-username { display: none; }
   .hero h1 { font-size: 1.9rem; }
 }
+
+/* ---- Written report (English / Hindi) ---- */
+.report-panel { margin-top: 2rem; }
+.report-toggle { display: flex; gap: 0.5rem; }
+.report-text {
+  white-space: pre-wrap;
+  font-family: inherit;
+  line-height: 1.6;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  margin: 0.75rem 0;
+}
+
+.report-line { min-height: 1.6em; }
+.ner { padding: 0 0.2em; border-radius: 4px; color: inherit; }
+.ner-analyte { background: rgba(37, 99, 235, 0.18); }
+.ner-level { background: rgba(217, 119, 6, 0.22); }
+.ner-condition { background: rgba(190, 24, 93, 0.16); }
+.ner-legend { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; font-size: 0.85rem; }

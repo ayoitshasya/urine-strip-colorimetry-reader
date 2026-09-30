@@ -95,3 +95,34 @@ class HistoryItem(BaseModel):
     filename: str
     results: Dict[str, ParameterResult]
     created_at: datetime
+
+
+# ---- Report (NLP layer) ----
+
+class ReportRequest(BaseModel):
+    """Request body for POST /report — the `results` object exactly as
+    returned by POST /analyze."""
+
+    results: Dict[str, ParameterResult]
+
+
+class ReportLine(BaseModel):
+    """One sentence of the report with its translation check result."""
+
+    english: str
+    hindi: Optional[str] = None   # None when the consistency check failed
+    consistent: bool
+
+class Segment(BaseModel):
+    text: str
+    label: Optional[str] = None
+
+class ReportResponse(BaseModel):
+    """Response body for POST /report — the bilingual plain-language report."""
+
+    english: str
+    english_segments: List[List[Segment]]
+    hindi: str
+    hindi_segments: List[List[Segment]]
+    all_consistent: bool
+    lines: List[ReportLine]
