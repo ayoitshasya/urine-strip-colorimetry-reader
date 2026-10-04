@@ -28,8 +28,13 @@ from .reference_data import REFERENCE_CHART, PAD_POSITIONS
 
 def read_image_from_bytes(image_bytes: bytes) -> np.ndarray:
     """Decode uploaded image bytes into an OpenCV BGR array."""
+    if not image_bytes:
+        raise ValueError("The uploaded file is empty. Please upload a valid image file.")
     np_arr = np.frombuffer(image_bytes, np.uint8)
-    img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+    try:
+        img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+    except cv2.error:
+        img = None
     if img is None:
         raise ValueError("Could not decode image. Please upload a valid image file.")
     return img
@@ -67,6 +72,8 @@ def extract_pad_color(img: np.ndarray, x_fraction: float, patch_size: int = 20) 
 
 def nearest_reference(rgb: Tuple[int, int, int], parameter: str) -> Dict:
     """Find the closest matching reference color for a given parameter."""
+    if any(not (0 <= c <= 255) for c in rgb):
+        raise ValueError("RGB values must be between 0 and 255.")
     options = REFERENCE_CHART[parameter]
     best_label, best_color, best_dist = None, None, float("inf")
 
@@ -91,6 +98,11 @@ def nearest_reference(rgb: Tuple[int, int, int], parameter: str) -> Dict:
 def analyze_strip(image_bytes: bytes) -> Dict:
     """Full pipeline: decode image -> extract pad colors -> match against reference chart."""
     img = read_image_from_bytes(image_bytes)
+
+    # Reject photos that are (almost) one flat colour, e.g. an all-black or
+    # all-white image: there is no strip in the frame to read.
+    if float(img.std()) < 8:
+        raise ValueError("No test strip detected. Please upload a clear photo of the strip.")
 
     results = {}
     # PAD_POSITIONS defines, for each clinical parameter (Glucose, Protein,
