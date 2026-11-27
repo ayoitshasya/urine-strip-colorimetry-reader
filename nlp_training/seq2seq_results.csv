@@ -1,0 +1,5 @@
+set,n,bleu,exact_match,clinical_consistency
+TRAIN,85,1.0,1.0,1.0
+VAL (summaries),8,1.0,1.0,1.0
+TEST_COMBO (held-out analyte/level),8,1.0,1.0,1.0
+TEST_SUMMARY (held-out summaries),10,1.0,1.0,1.0

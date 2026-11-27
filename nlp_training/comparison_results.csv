@@ -1,0 +1,33 @@
+set,model,label,precision,recall,f1
+TRAIN (overfitting check),CRF,ANALYTE,1.0,1.0,1.0
+TRAIN (overfitting check),CRF,CONDITION,1.0,1.0,1.0
+TRAIN (overfitting check),CRF,LEVEL,1.0,1.0,1.0
+TRAIN (overfitting check),CRF,OVERALL,1.0,1.0,1.0
+TRAIN (overfitting check),BiLSTM,ANALYTE,1.0,1.0,1.0
+TRAIN (overfitting check),BiLSTM,CONDITION,1.0,1.0,1.0
+TRAIN (overfitting check),BiLSTM,LEVEL,1.0,1.0,1.0
+TRAIN (overfitting check),BiLSTM,OVERALL,1.0,1.0,1.0
+VALIDATION (templated),CRF,ANALYTE,1.0,1.0,1.0
+VALIDATION (templated),CRF,CONDITION,1.0,1.0,1.0
+VALIDATION (templated),CRF,LEVEL,1.0,1.0,1.0
+VALIDATION (templated),CRF,OVERALL,1.0,1.0,1.0
+VALIDATION (templated),BiLSTM,ANALYTE,1.0,1.0,1.0
+VALIDATION (templated),BiLSTM,CONDITION,1.0,1.0,1.0
+VALIDATION (templated),BiLSTM,LEVEL,1.0,1.0,1.0
+VALIDATION (templated),BiLSTM,OVERALL,1.0,1.0,1.0
+TEST (templated),CRF,ANALYTE,1.0,1.0,1.0
+TEST (templated),CRF,CONDITION,1.0,1.0,1.0
+TEST (templated),CRF,LEVEL,1.0,1.0,1.0
+TEST (templated),CRF,OVERALL,1.0,1.0,1.0
+TEST (templated),BiLSTM,ANALYTE,1.0,1.0,1.0
+TEST (templated),BiLSTM,CONDITION,1.0,1.0,1.0
+TEST (templated),BiLSTM,LEVEL,1.0,1.0,1.0
+TEST (templated),BiLSTM,OVERALL,1.0,1.0,1.0
+"TEST_HAND (hand-written, unseen phrasing)",CRF,ANALYTE,1.0,0.969,0.984
+"TEST_HAND (hand-written, unseen phrasing)",CRF,CONDITION,1.0,0.88,0.936
+"TEST_HAND (hand-written, unseen phrasing)",CRF,LEVEL,1.0,1.0,1.0
+"TEST_HAND (hand-written, unseen phrasing)",CRF,OVERALL,1.0,0.966,0.983
+"TEST_HAND (hand-written, unseen phrasing)",BiLSTM,ANALYTE,0.94,0.969,0.955
+"TEST_HAND (hand-written, unseen phrasing)",BiLSTM,CONDITION,0.667,0.96,0.787
+"TEST_HAND (hand-written, unseen phrasing)",BiLSTM,LEVEL,0.983,1.0,0.991
+"TEST_HAND (hand-written, unseen phrasing)",BiLSTM,OVERALL,0.894,0.98,0.935
