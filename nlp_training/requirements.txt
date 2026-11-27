@@ -1,0 +1,7 @@
+# Training / evaluation dependencies for nlp_training/ (not needed by the web app)
+numpy
+matplotlib
+nltk
+scikit-learn
+sklearn-crfsuite
+torch

@@ -172,6 +172,28 @@ Analyzes an uploaded strip image.
 
 ---
 
+## 🗣️ NLP: Report Generation, NER and English→Hindi Translation
+
+**Live demo:** https://urine-strip-colorimetry-reader.vercel.app
+
+Beyond reading the strip, the project turns results into a plain-language report and processes that text with NLP:
+
+- **Named Entity Recognition (NER)** tags each report sentence with `ANALYTE`, `CONDITION` and `LEVEL`. A CRF and a BiLSTM were compared:
+
+  | Evaluation set | CRF F1 | BiLSTM F1 |
+  |---|---|---|
+  | 45 hand-written sentences with unseen phrasing | **0.983** | **0.935** |
+  | Templated train / validation / test sets | 1.00 | 1.00 |
+
+  The templated sets are easy by construction, so the hand-written set is the meaningful measure of generalisation.
+- **English → Hindi translation** uses a Seq2Seq model with attention trained on a parallel corpus of generated reports. A **consistency check** verifies that the Hindi output preserves the clinical facts of the English report (analytes, levels, pH values), not just word overlap.
+
+**Limitations:** the training data is small and templated, the models are a proof of concept, and the output is **not clinical advice**.
+
+**Code:** training and evaluation scripts, datasets, result CSVs and plots are in [`nlp_training/`](nlp_training/) (see its README for run order). The serving code used by the app is in [`backend/app/nlp/`](backend/app/nlp/).
+
+---
+
 ## ⚠️ Limitations & Calibration Note
 
 The reference colors and pad positions in `reference_data.py` are **approximate placeholder values**. For real-world accuracy, they should be recalibrated using:
@@ -186,5 +208,5 @@ This project is intended as an educational/proof-of-concept demonstration of col
 
 **Project:** KJS-HC-03-1 — Urine Test Strip Reader using Colorimetry as a Point-of-Care Technology  
 **Institution:** K J Somaiya School of Engineering  
-**Course:** Digital Marketing (DiM) — Sem VII
+**Course:** Digital Marketing (DiM) and NLP IA2
 
